@@ -51,7 +51,7 @@ while True:
 
     if key==ord('q'):
         if status==1:
-            times.append(datetime.now())
+            times.append(datetime.now())#used timestamp [not in db]
         break
 
 print(status_list)
@@ -60,7 +60,7 @@ print(times)
 for i in range(0,len(times),2):
     df=df.append({"Start":times[i],"End":times[i+1]},ignore_index=True)
 
-df.to_csv("Times.csv")
+df.to_csv("Times.csv")#saves time data in .csv format
 
 video.release()
 cv2.destroyAllWindows
