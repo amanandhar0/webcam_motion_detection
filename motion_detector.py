@@ -1,15 +1,54 @@
 import cv2, time, pandas
+import os
 from datetime import datetime
 
 first_frame=None
 status_list=[None,None]
 times=[]
 df=pandas.DataFrame(columns=["Start","End"])
+filename = 'video.avi'
+frames_per_second = 24.0
+res = '480p'
 
 video=cv2.VideoCapture(0)
 
+def change_res(cap, width, height):
+    cap.set(3, width)
+    cap.set(4, height)
+
+STD_DIMENSIONS =  {
+    "480p": (640, 480),
+    "720p": (1280, 720),
+    "1080p": (1920, 1080),
+    "4k": (3840, 2160),
+}
+
+def get_dims(cap, res='1080p'):
+    width, height = STD_DIMENSIONS["480p"]
+    if res in STD_DIMENSIONS:
+        width,height = STD_DIMENSIONS[res]
+
+    change_res(cap, width, height)
+    return width, height
+
+VIDEO_TYPE = {
+    'avi': cv2.VideoWriter_fourcc(*'XVID'),
+    #'mp4': cv2.VideoWriter_fourcc(*'H264'),
+    'mp4': cv2.VideoWriter_fourcc(*'XVID'),
+}
+
+def get_video_type(filename):
+    filename, ext = os.path.splitext(filename)
+    if ext in VIDEO_TYPE:
+      return  VIDEO_TYPE[ext]
+    return VIDEO_TYPE['avi']
+
+out = cv2.VideoWriter(filename, get_video_type(filename), 25, get_dims(video, res))
+
+
 while True:
     check, frame = video.read()
+    out.write(frame)
     status=0
     gray=cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
     gray=cv2.GaussianBlur(gray,(21,21),0)
@@ -47,6 +86,7 @@ while True:
     cv2.imshow("Threshold Frame",thresh_frame)
     cv2.imshow("Color Frame",frame)
 
+
     key=cv2.waitKey(1)
 
     if key==ord('q'):
@@ -62,5 +102,7 @@ for i in range(0,len(times),2):
 
 df.to_csv("Times.csv")#saves time data in .csv format
 
+
 video.release()
-cv2.destroyAllWindows
+out.release()
+cv2.destroyAllWindows()

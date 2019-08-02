@@ -9,7 +9,7 @@ df["End_string"]=df["End"].dt.strftime("%Y-%m-%d %H:%M:%S")
 
 cds=ColumnDataSource(df)
 
-p=figure(x_axis_type='datetime',height=100,width=500,title="Motion Graph")
+p=figure(x_axis_type='datetime',height=200,width=1080,title="Motion Graph")
 p.yaxis.minor_tick_line_color=None
 p.ygrid[0].ticker.desired_num_ticks=1 #table line hatauna
 

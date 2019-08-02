@@ -45,7 +45,11 @@ libraries and packages used:
     opens webcam [normal color]
     normal streaming converted into grayscale
     grayscale is blurred[gaussian] resulting into the translucent view similar to xray view also named as DELTA
+	it is blurred because the objects will have noise removed making edges smooth which will aid in easy calculation
+	delta has xray vision type translucense because it compares current and initial frame
     delta frame is conerted into pure black and white
+		if movement value or change in objects from initial frame to current framee is >30 it is white else black
+		it is done because slight change in light soure and brightness must not be considered as motion change
 
     opencv is used for motion detetion > that compares first_frame value of RGB variable with current
     if it detects slight motion contour is formed.  [green rectangles]
