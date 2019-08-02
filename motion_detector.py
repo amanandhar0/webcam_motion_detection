@@ -1,5 +1,5 @@
 import cv2, time, pandas
-import os
+import os, winsound
 from datetime import datetime
 
 first_frame=None
@@ -76,6 +76,7 @@ while True:
 
 
     if status_list[-1]==1 and status_list[-2]==0:
+        winsound.Beep(1000,500)
         times.append(datetime.now())
     if status_list[-1]==0 and status_list[-2]==1:
         times.append(datetime.now())
