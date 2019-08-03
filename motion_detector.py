@@ -81,6 +81,10 @@ while True:
         mixer.init()
         mixer.music.load("a.mp3")
         mixer.music.play()
+        #######################print photo###################
+        cv2.imwrite(filename='motion.jpg', img=frame)
+        img_new = cv2.imread('Motion.jpg', cv2.IMREAD_GRAYSCALE)
+        img_new = cv2.imshow("Captured Image", img_new)
     if status_list[-1]==0 and status_list[-2]==1:
         times.append(datetime.now())
 
