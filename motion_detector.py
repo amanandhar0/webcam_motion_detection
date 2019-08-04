@@ -7,13 +7,14 @@ first_frame=None
 status_list=[None,None]
 times=[]
 df=pandas.DataFrame(columns=["Start","End"])
-filename = 'video.avi'
-frames_per_second = 24.0
-res = '480p'
+filename = 'video.avi'  #for video output
+frames_per_second = 24.0 #for video
+res = '480p' #for video
 count=1
 
 video=cv2.VideoCapture(0)
 
+#codes for saving video
 def change_res(cap, width, height):
     cap.set(3, width)
     cap.set(4, height)
@@ -47,7 +48,7 @@ def get_video_type(filename):
 
 out = cv2.VideoWriter(filename, get_video_type(filename), 25, get_dims(video, res))
 
-
+##########for  video save close
 while True:
     check, frame = video.read()
     out.write(frame)
@@ -78,10 +79,10 @@ while True:
 
 
     if status_list[-1]==1 and status_list[-2]==0:
-        times.append(datetime.now())
-        mixer.init()
-        mixer.music.load("a.mp3")
-        mixer.music.play()
+        times.append(datetime.now())#thisisthe timestamp function of the python
+        mixer.init()#sound
+        mixer.music.load("a.mp3")#sound
+        mixer.music.play()#sound
         #######################print photo###################
 
 
@@ -90,6 +91,8 @@ while True:
         cv2.imwrite(filename=filname, img=frame)
         img_new = cv2.imread(filname, cv2.IMREAD_GRAYSCALE)
         img_new = cv2.imshow("Captured Image", img_new)
+
+        ######################print photo##############################
 
     if status_list[-1]==0 and status_list[-2]==1:
         times.append(datetime.now())
