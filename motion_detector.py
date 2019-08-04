@@ -10,6 +10,7 @@ df=pandas.DataFrame(columns=["Start","End"])
 filename = 'video.avi'
 frames_per_second = 24.0
 res = '480p'
+count=1
 
 video=cv2.VideoCapture(0)
 
@@ -82,9 +83,14 @@ while True:
         mixer.music.load("a.mp3")
         mixer.music.play()
         #######################print photo###################
-        cv2.imwrite(filename='motion.jpg', img=frame)
-        img_new = cv2.imread('Motion.jpg', cv2.IMREAD_GRAYSCALE)
+
+
+        filname=str(count)+"motion.jpg"
+        count += 1
+        cv2.imwrite(filename=filname, img=frame)
+        img_new = cv2.imread(filname, cv2.IMREAD_GRAYSCALE)
         img_new = cv2.imshow("Captured Image", img_new)
+
     if status_list[-1]==0 and status_list[-2]==1:
         times.append(datetime.now())
 
